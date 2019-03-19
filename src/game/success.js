@@ -1,3 +1,6 @@
 /* eslint-disable no-undef,no-alert */
 const message = 'MAMY TO!';
-export default () => alert(message);
+export default (count) => {
+  alert(message);
+  alert(`Zgadłeś za ${count} razem.`);
+};
