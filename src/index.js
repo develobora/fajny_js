@@ -1,3 +1,5 @@
-import game from './game/index';
+// import game from './game/index';
+// game();
+import main from './github/index';
 
-game();
+main();
