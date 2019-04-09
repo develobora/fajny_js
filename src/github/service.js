@@ -1,13 +1,30 @@
-const REPOS_URL = 'https://api.github.com/users/develobora/repos';
+/* eslint-disable no-console,no-undef */
+import { GitHubRepo } from './model';
 
-export default function getRepos() {
-  // eslint-disable-next-line no-undef
-  return fetch(REPOS_URL)
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw Error('Response not 200');
-    })
-    .catch(err => console.warn(err));
+const REPOS_URL = 'https://api.github.com/users/mat3e/repos';
+const FORBIDDEN_REPOS = ['ux'];
+
+const convert = ({
+  name,
+  stargazers_count: stars,
+  license
+}) => new GitHubRepo({
+  name,
+  stars,
+  license: license ? license.spdx_id : ''
+});
+
+export default async function getRepos() {
+  try {
+    const response = await fetch(REPOS_URL);
+    if (response.ok) {
+      return (await response.json())
+        .filter(r => !FORBIDDEN_REPOS.includes(r.name))
+        .map(convert);
+    }
+    throw Error('Response not 200');
+  } catch (err) {
+    console.warn(err);
+    return [];
+  }
 }

@@ -1,6 +1,6 @@
+/* eslint-disable no-undef,no-alert */
 import getRepos from './service';
 
-export default function () {
-  // eslint-disable-next-line
-  getRepos().then(arr => alert(arr.length));
+export default async function () {
+  (await getRepos()).forEach(r => alert(r));
 }
