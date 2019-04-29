@@ -14,8 +14,12 @@
   ],
   "author": "pobora",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "markdown-element": "^2.0.2"
+  },
   "devDependencies": {
+    "clean-webpack-plugin": "^2.0.1",
+    "copy-webpack-plugin": "^5.0.3",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",

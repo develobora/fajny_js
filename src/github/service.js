@@ -2,6 +2,8 @@
 import { GitHubRepo } from './model';
 
 const REPOS_URL = 'https://api.github.com/users/mat3e/repos';
+const RAW_URL = 'https://raw.githubusercontent.com/develobora/develobora.github.io/master/blog/en/';
+const POSTS_URL = 'posts/';
 const FORBIDDEN_REPOS = ['ux'];
 
 const convert = ({
@@ -27,4 +29,25 @@ export default async function getRepos() {
     console.warn(err);
     return [];
   }
+}
+
+async function getRawFileContent(pathToFile) {
+  try {
+    const response = await fetch(`${RAW_URL}${pathToFile}`);
+    if (response.ok) {
+      return (await response.text());
+    }
+    throw Error('Response not 200');
+  } catch (err) {
+    console.warn(err);
+    return [];
+  }
+}
+
+export async function getBlogPost(name = '0.md') {
+  return getRawFileContent(`${POSTS_URL}${name}`);
+}
+
+export async function getAboutMe() {
+  return getRawFileContent('about-me.md');
 }

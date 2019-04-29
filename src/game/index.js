@@ -5,6 +5,8 @@ import info from './userInfo';
 import counter from './counter';
 
 export default () => {
+  /* eslint-disable no-undef,no-alert */
+  alert('Wylosowano liczbę z przedziału 1 - 50. Zgaduj!');
   let num = getNum();
   const count = 0;
   while (num !== TO_FIND) {
