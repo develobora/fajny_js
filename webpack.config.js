@@ -9,8 +9,24 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     }),
-    new CopyPlugin([
-      { from: 'src/img', to: 'img/' }
-    ])
-  ]
+    new HtmlWebpackPlugin({
+      template: 'src/blog/index.html',
+      filename: 'blog/index.html'
+    }),
+    new CopyPlugin([{
+      from: 'src/img',
+      to: 'img/'
+    }, {
+      from: 'src/blog/img',
+      to: 'blog/img/'
+    }])
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader?modules']
+      }
+    ]
+  }
 };
