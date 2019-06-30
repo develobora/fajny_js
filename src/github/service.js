@@ -12,11 +12,13 @@ const POST_NAME = /(\d+)\.md/;
 const convert = ({
   name,
   stargazers_count: stars,
-  license
+  license,
+  html_url: url
 }) => new GitHubRepo({
   name,
   stars,
-  license: license ? license.spdx_id : ''
+  license: license ? license.spdx_id : '',
+  url
 });
 
 export default async function getRepos() {

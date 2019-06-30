@@ -1,6 +1,9 @@
 /* eslint-disable no-undef,no-alert */
-import getRepos from './service';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { GitHubRepos } from './component';
 
-export default async function () {
-  (await getRepos()).forEach(r => alert(r));
+export default function () {
+  library.add(faGithub);
+  customElements.define('gh-repos', GitHubRepos);
 }

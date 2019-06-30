@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export,no-undef, no-unused-vars,no-tabs */
+import { dom } from '@fortawesome/fontawesome-svg-core';
 import style from './style.css';
-import { getBlogPost, getBlogPostNames  } from '../github/service';
+import { getBlogPost, getBlogPostNames } from '../github/service';
 
 export class HtmlElementWithContent extends HTMLElement {
   constructor(tag, tagStyle, content) {
@@ -135,6 +136,7 @@ export class BlogPost extends HTMLElement {
   }
 
   async render() {
+    this.loading();
     const name = this.getAttribute('post-name');
     const fullPost = this.getAttribute('full-post') === 'true';
     const content = (await getBlogPost(`${name}.md`));
@@ -152,5 +154,13 @@ export class BlogPost extends HTMLElement {
         img { width: 100%; }
       </style>
     `);
+  }
+
+  loading() {
+    this.shadowRoot.innerHTML = '';
+    this.shadowRoot.appendChild(document.getElementById('blog-loading')
+      .content
+      .cloneNode(true));
+    dom.i2svg({ node: this.shadowRoot });
   }
 }

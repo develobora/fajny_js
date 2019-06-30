@@ -25,5 +25,66 @@
     </div>
 </blog-body>
 <blog-footer></blog-footer>
+
+<template id="blog-loading">
+    <style>
+        .fa-pulse{
+            -webkit-animation: fa-spin 1s infinite steps(8);
+            -o-animation: fa-spin 1s infinite steps(8);
+            animation: fa-spin 1s infinite steps(8);
+        }
+
+        @-webkit-keyframes fa-spin {
+            0%{
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100%{
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fa-spin {
+            0%{
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100%{
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        svg:not(:root).svg-inline--fa{
+            overflow: visible;
+        }
+
+        .svg-inline--fa{
+            margin: 0 auto;
+            display: block;
+            font-size: 2em;
+            height: 1em;
+            overflow: visible;
+            vertical-align: -.125em;
+        }
+        .svg-inline--fa.fa-w-16{
+            width: 1em;
+        }
+    </style>
+    <i class="fas fa-spinner fa-pulse"></i>
+</template>
 <script type="text/javascript" src="../main.js"></script></body>
 </html>

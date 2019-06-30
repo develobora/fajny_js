@@ -5,9 +5,11 @@ import startGame from './game/index';
 import startJoke from './joke/index';
 import initBlog from './blog/index';
 import initInfo from './about-me/index';
+import initGHRepos from './github/index';
 
 initInfo();
 initBlog();
+initGHRepos();
 
 window.controls = {
   startGame,

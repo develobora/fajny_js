@@ -1,5 +1,8 @@
 {
   "name": "portfolio",
+  "sideEffects": [
+    "*.css"
+  ],
   "version": "0.1.0",
   "description": "Programmer's portfolio",
   "main": "index.js",
@@ -15,7 +18,10 @@
   "author": "pobora",
   "license": "MIT",
   "dependencies": {
-    "markdown-element": "^2.0.2"
+    "markdown-element": "^2.0.2",
+    "@fortawesome/fontawesome-svg-core": "1.2.2",
+    "@fortawesome/free-brands-svg-icons": "5.9.0",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^2.0.1",
