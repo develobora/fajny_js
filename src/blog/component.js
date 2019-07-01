@@ -1,5 +1,7 @@
 /* eslint-disable import/prefer-default-export,no-undef, no-unused-vars,no-tabs */
 import { dom } from '@fortawesome/fontawesome-svg-core';
+
+import { markdownRenderer } from '../common/decorator';
 import style from './style.css';
 import { getBlogPost, getBlogPostNames } from '../github/service';
 
@@ -117,6 +119,7 @@ export class Body extends HTMLElement {
   }
 }
 
+@markdownRenderer
 export class BlogPost extends HTMLElement {
   // noinspection JSUnusedGlobalSymbols
   static get observedAttributes() {
@@ -141,10 +144,8 @@ export class BlogPost extends HTMLElement {
     const fullPost = this.getAttribute('full-post') === 'true';
     const content = (await getBlogPost(`${name}.md`));
     this.shadowRoot.innerHTML = (`
-      <article>
-        <mark-down>
-        ${fullPost ? content : `${content.substr(0, 300)}...`}
-        </mark-down>
+      <article>  
+        ${this.renderMarkdown(fullPost ? content : `${content.substr(0, 300)}...`)}
       </article>
       <style>
         pre {
