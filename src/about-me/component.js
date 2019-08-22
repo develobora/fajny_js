@@ -1,13 +1,13 @@
 /* eslint-disable import/prefer-default-export,no-undef,no-unused-vars */
 import { getAboutMe } from '../github/service';
-import { markdownRenderer } from '../common/decorator';
+import { markdownRenderer, renderer } from '../common/decorator';
 
+@renderer()
 @markdownRenderer
 export class AboutMe extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    this.render();
+    this.init();
   }
 
   async render() {

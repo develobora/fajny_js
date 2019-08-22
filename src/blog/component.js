@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export,no-undef, no-unused-vars,no-tabs */
 import { dom } from '@fortawesome/fontawesome-svg-core';
 
-import { markdownRenderer } from '../common/decorator';
+import { markdownRenderer, renderer } from '../common/decorator';
 import style from './style.css';
 import { getBlogPost, getBlogPostNames } from '../github/service';
 
@@ -42,11 +42,11 @@ export class Navigation extends HtmlElementWithContent {
   }
 }
 
+@renderer()
 export class Body extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    this.render();
+    this.init();
   }
 
   async render(name = null) {
@@ -119,6 +119,7 @@ export class Body extends HTMLElement {
   }
 }
 
+@renderer(true)
 @markdownRenderer
 export class BlogPost extends HTMLElement {
   // noinspection JSUnusedGlobalSymbols
@@ -128,14 +129,7 @@ export class BlogPost extends HTMLElement {
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-  }
-
-  // noinspection JSUnusedGlobalSymbols
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue) {
-      this.render();
-    }
+    this.init();
   }
 
   async render() {

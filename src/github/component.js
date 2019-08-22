@@ -1,12 +1,13 @@
 /* eslint-disable no-undef */
 import { dom } from '@fortawesome/fontawesome-svg-core';
+import { renderer } from '../common/decorator';
 import getRepos from './service';
 
+@renderer()
 export class GitHubRepos extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    this.render();
+    this.init();
   }
 
   async render() {

@@ -35,7 +35,8 @@ module.exports = {
         include: [
           path.resolve(__dirname, 'src/common'),
           path.resolve(__dirname, 'src/about-me'),
-          path.resolve(__dirname, 'src/blog')
+          path.resolve(__dirname, 'src/blog'),
+          path.resolve(__dirname, 'src/github')
         ]
       }
     ]
