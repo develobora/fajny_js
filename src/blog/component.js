@@ -3,7 +3,8 @@ import { dom } from '@fortawesome/fontawesome-svg-core';
 
 import { markdownRenderer, renderer } from '../common/decorator';
 import style from './style.css';
-import { getBlogPost, getBlogPostNames } from '../github/service';
+import { getBlogPost} from '../github/service';
+import { getNextPosts, getNextPost } from '../github/generator';
 
 export class HtmlElementWithContent extends HTMLElement {
   constructor(tag, tagStyle, content) {
@@ -50,22 +51,15 @@ export class Body extends HTMLElement {
   }
 
   async render(name = null) {
+    this.posts = getNextPosts();
     const fullPost = !!name;
-    const posts = fullPost ? [name] : await getBlogPostNames();
+    const names = fullPost ? [name] : (await this.posts.next()).value;
     this.shadowRoot.innerHTML = (`
-    <section>
     ${this.renderStyles()}
+    <section>
         <div class="${style.container}">
           <main>
-              ${
-      posts
-        .reverse()
-        .map((postName, index) => (`
-            <blog-post post-name="${postName}" full-post="${fullPost}"></blog-post>
-            <button id="${index}-${postName}">${fullPost ? 'Back' : 'Read more...'}</button>
-        `))
-        .join('<hr>')
-      }
+              ${this.renderPostComponents(names, fullPost)}
             </main>
             <aside>
                 <slot name="side-menu"></slot>
@@ -73,21 +67,66 @@ export class Body extends HTMLElement {
           </div>
       </section>
     `);
-    posts.forEach((postName, index) => {
+    this.attachClickCallbacks(names, fullPost);
+  }
+
+  async uprender() {
+    const generated = await this.posts.next();
+    const names = generated.value;
+    if (names.length) {
+      const main = this.shadowRoot.querySelector('main');
+      const nextPosts = document.createElement('div');
+      nextPosts.className = 'next-posts';
+      nextPosts.innerHTML = `<hr>${this.renderPostComponents(names)}`;
+      main.appendChild(nextPosts);
+      this.attachClickCallbacks(names);
+    }
+    if (generated.done) {
+      this.shadowRoot.getElementById('load-more')
+        .remove();
+    }
+  }
+
+  renderPostComponents(names, fullPost = false) {
+    const postComponents = names.map((postName, index) => (`
+        <blog-post post-name="${postName}" full-post="${fullPost}"></blog-post>
+        <button id="${index}-${postName}">${fullPost ? 'Back' : 'Read more...'}</button>
+      `))
+      .join('<hr>');
+    return postComponents + `<button id="load-more">${fullPost ? 'Next >>' : 'Load more...'}</button>`
+  }
+
+  attachClickCallbacks(names, fullPost = false) {
+    names.forEach((postName, index) => {
       this.shadowRoot.getElementById(`${index}-${postName}`)
-        .addEventListener('click', () => {
-          if (!fullPost) {
-            this.render(postName);
-          } else {
-            this.render();
-          }
-        });
+        .onclick = () => {
+        if (!fullPost) {
+          this.fullPost = getNextPost(postName);
+          this.render(postName);
+        } else {
+          this.render();
+        }
+      };
+      const loadMoreBtn = this.shadowRoot.getElementById('load-more');
+      loadMoreBtn.onclick = async () => {
+        loadMoreBtn.remove();
+        if (fullPost) {
+          this.render((await this.fullPost.next()).value);
+        } else {
+          this.uprender();
+        }
+      }
     });
   }
 
   renderStyles() {
     return (`
       <style>
+          #load-more {
+            display: block;
+            padding: 1em;
+            margin: 0 auto;
+          }
           .${style.container} {
             max-width: 70em;
             margin: 0 auto; 

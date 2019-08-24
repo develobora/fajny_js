@@ -2,9 +2,11 @@
 import { GitHubRepo } from './model';
 
 const REPOS_URL = 'https://api.github.com/users/mat3e/repos';
-const RAW_URL = 'https://raw.githubusercontent.com/develobora/develobora.github.io/master/blog/en/';
+// const RAW_URL = 'https://raw.githubusercontent.com/develobora/develobora.github.io/master/blog/en/';
+const RAW_URL = 'https://raw.githubusercontent.com/mat3e/mat3e.github.io/master/blog/en/';
 const POSTS_SUB_URL = 'posts/';
-const FILES_URL = 'https://api.github.com/repos/develobora/develobora.github.io/contents/blog/en/posts';
+// const FILES_URL = 'https://api.github.com/repos/develobora/develobora.github.io/contents/blog/en/posts';
+const FILES_URL = 'https://api.github.com/repos/mat3e/mat3e.github.io/contents/blog/en/posts';
 
 const FORBIDDEN_REPOS = ['ux'];
 const POST_NAME = /(\d+)\.md/;
