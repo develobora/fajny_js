@@ -3,7 +3,7 @@ import { dom } from '@fortawesome/fontawesome-svg-core';
 
 import { markdownRenderer, renderer } from '../common/decorator';
 import style from './style.css';
-import { getBlogPost} from '../github/service';
+import { getBlogPost } from '../github/service';
 import { getNextPosts, getNextPost } from '../github/generator';
 
 export class HtmlElementWithContent extends HTMLElement {
@@ -87,26 +87,26 @@ export class Body extends HTMLElement {
     }
   }
 
-  renderPostComponents(names, fullPost = false) {
+  renderPostComponents = (names, fullPost = false) => {
     const postComponents = names.map((postName, index) => (`
         <blog-post post-name="${postName}" full-post="${fullPost}"></blog-post>
         <button id="${index}-${postName}">${fullPost ? 'Back' : 'Read more...'}</button>
       `))
       .join('<hr>');
-    return postComponents + `<button id="load-more">${fullPost ? 'Next >>' : 'Load more...'}</button>`
-  }
+    return `${postComponents}<button id="load-more">${fullPost ? 'Next >>' : 'Load more...'}</button>`;
+  };
 
   attachClickCallbacks(names, fullPost = false) {
     names.forEach((postName, index) => {
       this.shadowRoot.getElementById(`${index}-${postName}`)
         .onclick = () => {
-        if (!fullPost) {
-          this.fullPost = getNextPost(postName);
-          this.render(postName);
-        } else {
-          this.render();
-        }
-      };
+          if (!fullPost) {
+            this.fullPost = getNextPost(postName);
+            this.render(postName);
+          } else {
+            this.render();
+          }
+        };
       const loadMoreBtn = this.shadowRoot.getElementById('load-more');
       loadMoreBtn.onclick = async () => {
         loadMoreBtn.remove();
@@ -115,12 +115,11 @@ export class Body extends HTMLElement {
         } else {
           this.uprender();
         }
-      }
+      };
     });
   }
 
-  renderStyles() {
-    return (`
+  renderStyles = () => (`
       <style>
           #load-more {
             display: block;
@@ -155,7 +154,6 @@ export class Body extends HTMLElement {
           }
       </style>
     `);
-  }
 }
 
 @renderer(true)

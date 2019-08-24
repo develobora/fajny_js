@@ -7,8 +7,6 @@ import initBlog from './blog/index';
 import initInfo from './about-me/index';
 import initGHRepos from './github/index';
 
-import { getNextPosts } from './github/generator';
-
 initInfo();
 initBlog();
 initGHRepos();

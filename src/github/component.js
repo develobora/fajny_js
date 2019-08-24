@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef,import/prefer-default-export */
 import { dom } from '@fortawesome/fontawesome-svg-core';
 import { renderer } from '../common/decorator';
 import getRepos from './service';
@@ -24,8 +24,7 @@ export class GitHubRepos extends HTMLElement {
     dom.i2svg({ node: this.shadowRoot });
   }
 
-  renderStyles() {
-    return (`
+  renderStyles = () => (`
       <style>
         img{
             height: 1rem;
@@ -61,14 +60,13 @@ export class GitHubRepos extends HTMLElement {
         }
       </style>
     `);
-  }
 
-  renderHeader() {
+  renderHeader = () => {
     const logo = document.getElementById('gh-logo')
       .content
       .cloneNode(true);
     const h2 = document.createElement('h2');
     h2.appendChild(logo);
     return h2.outerHTML;
-  }
+  };
 }

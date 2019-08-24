@@ -15,6 +15,7 @@ export async function getJoke() {
     const { value: { joke: punchline } } = await (await fetch(FALLBACK_JOKE_URL)).json();
     return new Joke({ punchline });
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.warn(err);
     return new Joke({
       setup: 'Why do Java programmers wear glasses?',
