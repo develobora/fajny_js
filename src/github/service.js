@@ -1,4 +1,5 @@
 /* eslint-disable no-console,no-undef */
+import { logging } from '../common/proxy';
 import { GitHubRepo } from './model';
 
 const REPOS_URL = 'https://api.github.com/users/mat3e/repos';
@@ -16,12 +17,12 @@ const convert = ({
   stargazers_count: stars,
   license,
   html_url: url
-}) => new GitHubRepo({
+}) => logging(new GitHubRepo({
   name,
   stars,
   license: license ? license.spdx_id : '',
   url
-});
+}));
 
 export default async function getRepos() {
   try {
